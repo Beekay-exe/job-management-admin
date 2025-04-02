@@ -15,7 +15,7 @@ export function Navbar({ onCreateJob }: NavbarProps) {
         background: 'white',
         padding: '8px 16px',
         margin: '12px auto',
-        width: '840px',
+        width: '790px',
         borderRadius: '50px',
         boxShadow: '0 2px 20px rgba(0, 0, 0, 0.05)',
         fontFamily: 'Satoshi Variable, sans-serif',
