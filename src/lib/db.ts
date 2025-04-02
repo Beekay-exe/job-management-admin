@@ -1,6 +1,4 @@
-// You need to install @prisma/client first
-// Run: npm install @prisma/client
-// Then generate Prisma Client: npx prisma generate
+
 import { PrismaClient } from '@prisma/client';
 
 const prismaClientSingleton = () => {

@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     console.log('Received job data:', body);
 
-    // Validate required fields
+
     const requiredFields = ['jobTitle', 'companyName', 'location', 'jobType'];
     const missingFields = requiredFields.filter(field => !body[field]);
     
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate salary values
+
     const salaryMin = Number(body.salaryMin);
     const salaryMax = Number(body.salaryMax);
     
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     }
 
     console.log('Attempting to create job in database...');
-    // Create the job
+
     const job = await prisma.job.create({
       data: {
         jobTitle: body.jobTitle,
