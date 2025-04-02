@@ -3,16 +3,25 @@ import prisma from '@/lib/db';
 
 export async function GET() {
   try {
+    console.log('Attempting to connect to database...');
     const jobs = await prisma.job.findMany({
       orderBy: {
         postedTime: 'desc'
       }
     });
+    console.log(`Successfully fetched ${jobs.length} jobs`);
     return NextResponse.json(jobs);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching jobs:', error);
+    console.error('Database connection string:', process.env.DATABASE_URL ? 'Set' : 'Not set');
+    console.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
     return NextResponse.json(
-      { error: 'Failed to fetch jobs' },
+      { error: 'Failed to fetch jobs. Please check server logs for more details.' },
       { status: 500 }
     );
   }
@@ -45,6 +54,7 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log('Attempting to create job in database...');
     // Create the job
     const job = await prisma.job.create({
       data: {
@@ -60,13 +70,21 @@ export async function POST(request: Request) {
         postedTime: new Date().toISOString()
       }
     });
+    console.log('Job created successfully:', job);
 
     return NextResponse.json(job, { status: 201 });
   } catch (error: any) {
     console.error('Error creating job:', error);
+    console.error('Database connection string:', process.env.DATABASE_URL ? 'Set' : 'Not set');
+    console.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
     return NextResponse.json(
-      { error: error.message || 'Failed to create job' },
+      { error: error.message || 'Failed to create job. Please check server logs for more details.' },
       { status: 500 }
     );
   }
-} 
+}
